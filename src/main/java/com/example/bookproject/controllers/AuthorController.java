@@ -50,11 +50,11 @@ public class AuthorController {
     }
 
     @GetMapping("/listAuthors")
-    public String listAuthors() {
+    public String listAuthors(Model model) {
         return null;
     }
 
-    @GetMapping("/deleteAuthor")
+    @PostMapping("/deleteAuthor")
     public String deleteAuthor(AuthorDTO authorDTO) {
         return null;
     }
@@ -66,4 +66,8 @@ public class AuthorController {
         return "author/details";
     }
 
+    @GetMapping("/search")
+    public String searchAuthors(@RequestParam("query") String query, Model model) {
+        return null;
+    }
 }

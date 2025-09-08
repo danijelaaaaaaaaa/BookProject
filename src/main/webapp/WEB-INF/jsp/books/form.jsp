@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/styles.css' />">
     <title>Add book</title>
 </head>
 <body>
