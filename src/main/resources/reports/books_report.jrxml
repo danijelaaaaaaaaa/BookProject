@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="books_report" pageWidth="595" pageHeight="842"
+              columnWidth="555" leftMargin="20" rightMargin="20"
+              topMargin="20" bottomMargin="20">
+
+    <queryString>
+        <![CDATA[
+        SELECT b.name AS book_name, a.firstName AS author_first, a.lastName AS author_last
+        FROM book b
+        JOIN book_author ba ON b.id = ba.book_id
+        JOIN author a ON a.id = ba.author_id
+    ]]>
+    </queryString>
+
+
+    <field name="book_name" class="java.lang.String"/>
+    <field name="author_first" class="java.lang.String"/>
+    <field name="author_last" class="java.lang.String"/>
+
+    <title>
+        <band height="50">
+            <textField>
+                <reportElement x="0" y="10" width="555" height="30" />
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["All Books Report"]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="20">
+            <staticText><reportElement x="0" y="0" width="250" height="20"/>
+                <text><![CDATA[Book Title]]></text>
+            </staticText>
+            <staticText><reportElement x="260" y="0" width="295" height="20"/>
+                <text><![CDATA[Author]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="20">
+            <textField><reportElement x="0" y="0" width="250" height="20"/>
+                <textFieldExpression><![CDATA[$F{book_name}]]></textFieldExpression>
+            </textField>
+            <textField><reportElement x="260" y="0" width="295" height="20"/>
+                <textFieldExpression><![CDATA[$F{author_first} + " " + $F{author_last}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

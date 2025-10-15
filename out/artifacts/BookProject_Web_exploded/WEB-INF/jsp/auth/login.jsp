@@ -22,9 +22,9 @@
                 <input type="password" name="password" class="login-input" required />
                 </label><br>
                 <input type="submit" class="login-input" /> <br>
-            </form>
+            </form> <br>
             <c:if test="${not empty param.error}">
-                <div class="alert alert-success"> >Invalid username or password</div>
+                <div class="alert alert-danger"> >Invalid username or password</div>
             </c:if>
 
     </sec:authorize>

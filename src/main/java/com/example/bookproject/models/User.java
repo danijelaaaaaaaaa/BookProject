@@ -44,9 +44,6 @@ public class User {
     @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL)
     private Set<Book> addedBooks = new HashSet<>();
 
-    @OneToMany(mappedBy = "receiver")
-    private Set<Notification> notifications;
-
     @ManyToMany
     @JoinTable(
             name = "user_following",

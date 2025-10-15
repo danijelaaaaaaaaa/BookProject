@@ -9,6 +9,7 @@
     <title>Genres</title>
     </head>
 <body>
+<%@ include file="../../utils/header.jsp" %>
 <div class="container">
 <c:if test="${not empty successMessage}">
     <div class="alert alert-success">${successMessage}</div>
@@ -72,7 +73,7 @@
         </c:forEach>
     </tbody>
 </table>
-
+    <button class="back-btn" onclick="history.back()">← Back</button>
 </div>
 
 </body>

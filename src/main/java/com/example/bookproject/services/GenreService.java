@@ -1,17 +1,12 @@
 package com.example.bookproject.services;
 
 import com.example.bookproject.dto.GenreDTO;
-import com.example.bookproject.models.Book;
 import com.example.bookproject.models.Genre;
 import com.example.bookproject.repositories.GenreRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;

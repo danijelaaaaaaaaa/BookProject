@@ -3,6 +3,7 @@ package com.example.bookproject.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
     @Autowired
@@ -22,11 +24,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers( "/", "/index", "/auth/login", "/auth/process",  "/books/details/**", "/books/list-books",
-                                "/author/details/**", "/css/**", "/js/**", "/images/**", "/auth/register"
+                                "/author/details/**", "/css/**", "/js/**", "/images/**", "/auth/register", "/author/list-authors",
+                                "/uploads/**", "/books/search-books", "/books/filter"
 
                         ).permitAll()
 
-                        .requestMatchers("/books/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/books/**", "/messages/**", "/categories/**").hasAnyRole("USER", "ADMIN")
 
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
@@ -36,7 +39,7 @@ public class SecurityConfig {
                         .loginPage("/auth/login")
                         .loginProcessingUrl("/auth/process")
                         .successHandler(customLoginSuccessHandler)
-                        //.defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/auth/login-success", true)
                         .failureUrl("/auth/login?error=true")
                         .permitAll()
                 )
@@ -46,7 +49,7 @@ public class SecurityConfig {
 
                         .permitAll()
                 )
-                .exceptionHandling(ex -> ex.accessDeniedPage("/auth/access-denied"))
+                .exceptionHandling(ex -> ex.accessDeniedPage("/auth/accessDenied"))
         ;
         return http.build();
     }

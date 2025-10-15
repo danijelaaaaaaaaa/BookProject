@@ -40,9 +40,17 @@
             </td>
         </tr>
         <tr>
-            <td> ...</td>
+            <td> Report</td>
             <td>
-                <a href="${pageContext.request.contextPath}/index">
+                <a href="${pageContext.request.contextPath}/admin/reports/books-report">
+                    <button>Open</button>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td> View Generated Reports</td>
+            <td>
+                <a href="${pageContext.request.contextPath}/admin/reports/list">
                     <button>Open</button>
                 </a>
             </td>

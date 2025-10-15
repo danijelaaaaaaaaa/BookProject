@@ -9,18 +9,40 @@
 <body>
 <%@ include file="../utils/header.jsp" %>
 <div class="container">
-<h2>Adda a new book</h2>
+
+<c:if test="${not empty successMessage}">
+    <div class="alert alert-success">${successMessage}</div>
+</c:if>
+
+<c:if test="${not empty errorMessage}">
+    <div class="alert alert-danger">${errorMessage}</div>
+</c:if>
+    <c:choose>
+      <c:when test="${isEdit}">
+      <h2>Edit book</h2>
+        <c:set var="formAction" value="${pageContext.request.contextPath}/books/editBook/${bookDTO.id}" />
+      </c:when>
+      <c:otherwise>
+      <h2>Add a a new book</h2>
+        <c:set var="formAction" value="${pageContext.request.contextPath}/books/save" />
+      </c:otherwise>
+    </c:choose>
     <form:form modelAttribute="bookDTO"
                 method="post"
-               action="${pageContext.request.contextPath}/books/save"
+               action="${formAction}"
                 enctype="multipart/form-data">
         <div>
         <form:hidden path="id"/>
         <form:label path="name"> Name: </form:label>
-        <form:input path="name"/>
-        <form:errors path="name"/>
+        <form:input path="name" required="required" maxlength="200" cssClass="form-control"/>
+         <form:errors path="name" element="div" cssClass="text-danger" />
         </div>
-        <div>
+        <div class="form-field">
+        <form:label path="description">Description:</form:label><br>
+        <form:textarea path="description" rows="4" cols="50" placeholder="Enter book description..." />
+        <form:errors path="description" cssClass="text-danger" />
+    </div>
+        <div class="form-field">
             <form:label path="genreIds"> Genres: </form:label>
             <form:select path="genreIds" multiple="true">
                 <c:forEach var="genre" items="${genres}">
@@ -28,7 +50,7 @@
                 </c:forEach>
             </form:select>
         </div>
-        <div>
+        <div class="form-field">
             <form:label path="authorIds"> Authors: </form:label>
             <form:select path="authorIds" multiple="true">
                 <c:forEach var="author" items="${authors}">
@@ -43,6 +65,7 @@
             <c:if test="${bookDTO.imagePath != null}">
                 <p>Now picture: </p>
                 <img src="${pageContext.request.contextPath}/uploads/${bookDTO.imagePath}" width="150"  alt="Cover of the book"/>
+                <input type="hidden" name="existingImagePath" value="${bookDTO.imagePath}" />
             </c:if>
         </div>
         <div>

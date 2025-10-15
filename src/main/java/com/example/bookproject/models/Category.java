@@ -22,7 +22,8 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    private boolean isPublic;
+    @Column(name = "is_public", nullable = false)
+    private boolean publicCategory = false;
 
     private boolean isSystem = false;
 

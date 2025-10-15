@@ -8,12 +8,12 @@
 </head>
 <body>
 <%@ include file="utils/header.jsp" %>
-<h1>Hello from index.jsp </h1>
+<div class="container">
+<h1>Welcome to Book project</h1>
+<p>Your personal space for tracking books, authors, and genres.</p> <br>
 
-<a href="${pageContext.request.contextPath}/books/new"> Click2</a> <br>
-<a href="${pageContext.request.contextPath}/books/list-books"> Click3</a> <br>
-<a href="${pageContext.request.contextPath}/author/new"> Click3</a> <br>
-<a href="${pageContext.request.contextPath}/auth/login"> LOGIN</a> <br>
-
+<a href="${pageContext.request.contextPath}/books/list-books" class="btn-message"> View Books</a>
+<a href="${pageContext.request.contextPath}/auth/login" class="btn-message">> Login</a> <br>
+</div>
 </body>
 </html>

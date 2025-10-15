@@ -1,33 +1,31 @@
 package com.example.bookproject.controllers;
 
 import com.example.bookproject.dto.UserRegistrationDTO;
-import com.example.bookproject.models.Role;
 import com.example.bookproject.models.User;
-import com.example.bookproject.repositories.RoleRepository;
 import com.example.bookproject.repositories.UserRepository;
+import com.example.bookproject.services.UserRegistrationService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Collections;
+import java.security.Principal;
+
 
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
+    private UserRegistrationService  userRegistrationService;
+
+    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login(){
@@ -46,28 +44,28 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") UserRegistrationDTO userRegistrationDTO, Model model){
+    public String registerUser(@ModelAttribute("user") UserRegistrationDTO userRegistrationDTO, BindingResult results, Model model ){
 
-        if(userRepository.existsByUsername(userRegistrationDTO.getUsername())){
-            model.addAttribute("error", "Username is already taken!");
+        if(results.hasErrors()){
             return "auth/register";
         }
-        if(userRepository.existsByEmail(userRegistrationDTO.getEmail())){
-            model.addAttribute("error", "Email is already taken!");
+        try {
+            userRegistrationService.save(userRegistrationDTO);
+            model.addAttribute("success", "User registered successfully!");
+            return "auth/login";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
             return "auth/register";
         }
-        Role role = roleRepository.findByName("ROLE_USER").orElseThrow(() -> new RuntimeException("Role not found!"));
-        User user = new User();
-        user.setUsername(userRegistrationDTO.getUsername());
-        user.setEmail(userRegistrationDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
-        user.setRoles(Collections.singleton(role));
-        userRepository.save(user);
-        model.addAttribute("success", "User registered successfully!");
 
-        return "auth/login";
     }
 
+    @GetMapping("/login-success")
+    public String loginSuccess(Principal principal, HttpSession session) {
+        User user = userRepository.findByUsername(principal.getName()).orElseThrow();
+        session.setAttribute("currentUser", user);
+        return "redirect:/index";
+    }
 
 
 
