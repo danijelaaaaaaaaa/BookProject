@@ -37,4 +37,26 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roles_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "addedBy", cascade = CascadeType.ALL)
+    private Set<Book> addedBooks = new HashSet<>();
+
+    @OneToMany(mappedBy = "receiver")
+    private Set<Notification> notifications;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_following",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followed_id")
+    )
+    private Set<User> following = new HashSet<>();
+
+    @ManyToMany(mappedBy = "following")
+    private Set<User> followers = new HashSet<>();
+
+
 }

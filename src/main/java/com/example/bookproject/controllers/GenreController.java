@@ -53,7 +53,7 @@ public class GenreController {
     public String deleteGenreByName(@RequestParam String genreName, RedirectAttributes redirectAttributes) {
         try {
             genreService.deleteByName(genreName);
-            redirectAttributes.addFlashAttribute("errorMessage", "Genre " + genreName+ " deleted successfully!");
+            redirectAttributes.addFlashAttribute("successMessage", "Genre " + genreName+ " deleted successfully!");
         } catch (NoSuchElementException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }

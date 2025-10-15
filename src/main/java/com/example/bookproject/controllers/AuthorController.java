@@ -59,7 +59,7 @@ public class AuthorController {
         return null;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/details/{id}")
     public String showAuthorDetails(@PathVariable Long id, Model model) {
         Author author = authorRepository.findById(id).orElseThrow();
         model.addAttribute("author", author);

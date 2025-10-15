@@ -5,13 +5,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="<c:url value='/css/styles.css' />">
-    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="<c:url value='/css/styles.css' />"><meta charset="UTF-8">
     <title>Genres</title>
-</head>
+    </head>
 <body>
 <div class="container">
-    <h1>Genres: </h1>
 <c:if test="${not empty successMessage}">
     <div class="alert alert-success">${successMessage}</div>
 </c:if>
@@ -20,33 +18,31 @@
     <div class="alert alert-danger">${errorMessage}</div>
 </c:if>
 
-    <div class="grid grid-2">
-
+<h4> Add a new genre </h4>
 <form:form modelAttribute="genreDTO" action="${pageContext.request.contextPath}/admin/genre/saveGenre" method="post">
     Name of the genre:
     <form:input path="name" required="required" maxlength="60" />
     <form:errors path="name" element="div" cssClass="text-danger" />
-    <br>
     <input type="submit" value="Save" />
 </form:form> <br>
-    </div>
-    <div class="card">
+
+    <h4> Search genre </h4>
 <form action="${pageContext.request.contextPath}/admin/genre/searchGenres" method="get">
     <label>
         <input type="text" name="query" placeholder="Search genre...">
     </label>
     <button type="submit">Search</button>
-</form>
-    </div>
+</form> <br>
 
-    <div class="table-wrap">
+    <h4> List of genres </h4>
 <table>
     <thead>
     <tr>
         <th>#</th>
         <th>Name of genre</th>
         <th>Book count</th>
-        <th>Actions</th>
+        <th>Change the name</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
@@ -57,27 +53,25 @@
                 <td>${genre.bookCount}</td>
 
                 <td>
-                    <div class="actions">
-                    <form class="inline-form" action="${pageContext.request.contextPath}/admin/genre/deleteGenre" method="post">
-                        <input type="hidden" name="genreName" value="${genre.name}" />
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </form>
-
-
-                    <form class="inline-form" action="${pageContext.request.contextPath}/admin/genre/updateGenre" method="post">
+                    <form action="${pageContext.request.contextPath}/admin/genre/updateGenre" method="post">
                         <input type="hidden" name="oldName" value="${genre.name}" />
-                        <label> New name:
+                        <label>
                         <input type="text" name="newName" value="${genre.name}" required maxlength="60" />
                         </label>
-                        <button class="btn btn-primary" type="submit">Update</button>
+                        <input type="submit" value="Update" />
                     </form>
-                    </div>
+
+                </td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/admin/genre/deleteGenre" method="post">
+                        <input type="hidden" name="genreName" value="${genre.name}" />
+                        <input type="submit" value="Delete"  />
+                    </form>
                 </td>
             </tr>
         </c:forEach>
     </tbody>
 </table>
-    </div>
 
 </div>
 

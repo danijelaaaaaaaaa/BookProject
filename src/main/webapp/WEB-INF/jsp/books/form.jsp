@@ -7,6 +7,9 @@
     <title>Add book</title>
 </head>
 <body>
+<%@ include file="../utils/header.jsp" %>
+<div class="container">
+<h2>Adda a new book</h2>
     <form:form modelAttribute="bookDTO"
                 method="post"
                action="${pageContext.request.contextPath}/books/save"
@@ -44,8 +47,9 @@
         </div>
         <div>
             <button type="submit">Save</button>
-            <a href="${pageContext.request.contextPath}/index">Cancel</a>
+            <button class="back-btn" onclick="history.back()">Cancel</button>
         </div>
     </form:form>
+</div>
 </body>
 </html>

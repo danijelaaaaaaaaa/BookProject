@@ -29,6 +29,8 @@ public class BookService {
     private GenreRepository genreRepository;
     @Autowired
     private AuthorRepository authorRepository;
+    @Autowired
+    private ImageStorageService imageStorageService;
 
     @Transactional
     public void removeGenreFromAllBooks(Genre genre) {
@@ -50,30 +52,10 @@ public class BookService {
         book.setAuthor(authors);
 
         if(!file.isEmpty()) {
-            validateFile(file);
-            String fileName = storeImage(file);
-            book.setImagePath("/uploads/" + fileName);
+            String imagePath = imageStorageService.storeImage(file);
+            book.setImagePath(imagePath);
         }
         bookRepository.save(book);
     }
 
-    private void validateFile(MultipartFile file)  {
-        String contentType = file.getContentType();
-        if (contentType == null || !contentType.startsWith("image/")) {
-            throw new IllegalArgumentException("File is not an image");
-        }
-    }
-
-    private String storeImage(MultipartFile fileName) throws IOException {
-        Path uploadPath = Path.of(System.getProperty("user.dir"), "uploads");
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
-        String originalFileName = fileName.getOriginalFilename();
-        String extension = originalFileName != null ? originalFileName.substring(originalFileName.lastIndexOf(".")) : null;
-        String newFileName = UUID.randomUUID() + extension;
-        Path filePath = uploadPath.resolve(newFileName);
-        Files.copy(fileName.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        return newFileName;
-    }
 }

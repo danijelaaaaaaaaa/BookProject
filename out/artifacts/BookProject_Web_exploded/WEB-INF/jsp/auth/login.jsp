@@ -10,21 +10,32 @@
     <title>Log in</title>
 </head>
 <body>
+<%@ include file="../utils/header.jsp" %>
+ <div class="container">
     <sec:authorize access="!isAuthenticated()">
-        <div class="login">
-            <form action="${pageContext.request.contextPath}/auth/login" method="POST" >
+
+            <form action="${pageContext.request.contextPath}/auth/process" method="POST" >
                 <label class="login-label">Username:
                 <input type="text" name="username" class="login-input" required/>
-                </label>
+                </label> <br>
                 <label class="login-label">Password:
                 <input type="password" name="password" class="login-input" required />
-                </label>
-                <input type="submit" class="login-input" />
+                </label><br>
+                <input type="submit" class="login-input" /> <br>
             </form>
             <c:if test="${not empty param.error}">
-                <label class="login-error">Invalid username or password</label>
+                <div class="alert alert-success"> >Invalid username or password</div>
             </c:if>
-        </div>
+
     </sec:authorize>
+    <sec:authorize access="isAuthenticated()">
+    <h1>You are already logged in!</h1>
+    <a href="${pageContext.request.contextPath}/index">Go to homepage</a>
+
+    <form action="${pageContext.request.contextPath}/logout" method="POST">
+    <input type="submit" value="Logout" />
+    </form>
+    </sec:authorize>
+     </div>
 </body>
 </html>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -6,10 +7,9 @@
     <title>BookProject</title>
 </head>
 <body>
+<%@ include file="utils/header.jsp" %>
 <h1>Hello from index.jsp </h1>
-<p>Radi!</p>
 
-<a href="${pageContext.request.contextPath}/admin/genre/list"> Click</a> <br>
 <a href="${pageContext.request.contextPath}/books/new"> Click2</a> <br>
 <a href="${pageContext.request.contextPath}/books/list-books"> Click3</a> <br>
 <a href="${pageContext.request.contextPath}/author/new"> Click3</a> <br>

@@ -7,6 +7,8 @@
     <title>Add author</title>
 </head>
 <body>
+<%@ include file="../utils/header.jsp" %>
+<div class="container">
     <form:form modelAttribute="authorDTO"
            method="post"
            action="${pageContext.request.contextPath}/author/saveAuthor"
@@ -36,5 +38,6 @@
         </div>
         <button type="submit">Save</button>
     </form:form>
+</div>
 </body>
 </html>

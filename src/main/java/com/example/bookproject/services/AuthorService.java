@@ -35,8 +35,9 @@ public class AuthorService {
             for (Book book : books) {
                 book.getAuthor().add(author);
             }
+            bookRepository.saveAll(books);
         }
-        bookRepository.saveAll(books);
+
     }
 
 }
