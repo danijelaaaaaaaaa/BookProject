@@ -178,6 +178,8 @@ public class BookController {
         List<Book> results = bookRepository.findByNameContainingIgnoreCase(keyword);
         model.addAttribute("books", results);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("genres", genreRepository.findAllByOrderByNameAsc());
+        model.addAttribute("authors", authorRepository.findAllByOrderByFirstNameAsc());
         return "books/list-books";
     }
 

@@ -13,6 +13,4 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
     Genre findByNameIgnoreCase(String name);
     List<Genre> findByNameContainingIgnoreCase(String name);
     List<Genre> findAllByOrderByNameAsc();
-    //@Query("SELECT g FROM Genre g LEFT JOIN")
-   // List<Genre> searchWithBooks(String keyword);
 }

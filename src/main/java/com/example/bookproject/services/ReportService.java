@@ -54,7 +54,7 @@ public class ReportService {
         String outputPath = baseDir + "/books_report_" + timestamp + ".pdf";
 
         JasperExportManager.exportReportToPdfFile(jasperPrint, outputPath);
-        logger.info("📄 Books report saved to {}", outputPath);
+        logger.info("Books report saved to {}", outputPath);
         return outputPath;
     }
 
